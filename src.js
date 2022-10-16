@@ -1,15 +1,25 @@
 let messageBox;
 let nameTag;
 
-const displayMessage = (charList) => {
+const displayMessage = (wordList) => {
+    const charList = wordList.shift();
+    messageBox.innerHTML += '<span class="word"></span> ';
+    const wordContainers = messageBox.getElementsByClassName('word');
+    currentWord = wordContainers[wordContainers.length - 1];
+    displayLetters(charList, wordList, currentWord);
+}
+
+const displayLetters = (charList, wordList, currentWord) => {
     setTimeout(() => {
-        const char = charList.shift().replace(" ", "&nbsp;");
-        messageBox.innerHTML += '<span class="letter">' + char + '</span>';
+        const char = charList.shift();
+        currentWord.innerHTML += '<span class="letter">' + char + '</span>';
         if (charList.length) {
-            displayMessage(charList);
+            displayLetters(charList, wordList, currentWord);
+        } else if (wordList.length){
+            displayMessage(wordList);
         }
     }, config.delayTimer);
-}
+};
 
 const start = () => {
     nameTag = document.getElementById('name').getElementsByClassName('text')[0];
@@ -29,12 +39,12 @@ const start = () => {
     client.connect().catch(console.error);
     client.on('message', (channel, tags, message, self) => {
         if (tags['display-name'] === config.displayName) {
-            const charList = message.split('');
+            const wordList = message.split(' ').map((word) => word.split(''));
             messageBox.innerHTML = '';
             if (config.delayTimer > 0) {
-                displayMessage(charList);
+                displayMessage(wordList);
             } else {
-                messageBox.innerHTML = charList.map((char) => '<span class="letter">' + char.replace(" ", "&nbsp;") + '</span>').join('');
+                messageBox.innerHTML = wordList.map((word) => '<span class="word">' + word.map((char) => '<span class="letter">' + char + '</span>').join('') + '</span>').join(' ');
             }
         }
     });

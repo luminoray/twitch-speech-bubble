@@ -42,12 +42,17 @@ html, body {
     padding: 20px;
 }
 
+/* We separate each word into <span class="word"></span> */
+.word {
+    display: inline-block;
+}
+
 /* We separate each letter into <span class="letter"></span> */
 .letter {
     display: inline-block;
     transform: skew(5deg) !important;
 }
 
-.letter:first-child {
+.word:first-child .letter:first-child {
     text-transform: uppercase;
 }
