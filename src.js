@@ -4,7 +4,7 @@ let nameTag;
 const displayMessage = (charList) => {
     setTimeout(() => {
         const char = charList.shift().replace(" ", "&nbsp;");
-        container.innerHTML += '<span class="letter">' + char + '</span>';
+        messageBox.innerHTML += '<span class="letter">' + char + '</span>';
         if (charList.length) {
             displayMessage(charList);
         }
