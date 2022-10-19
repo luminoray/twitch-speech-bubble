@@ -10,15 +10,15 @@ const displayMessage = (wordList) => {
 }
 
 const displayLetters = (charList, wordList, currentWord) => {
-    setTimeout(() => {
-        const char = charList.shift();
-        currentWord.innerHTML += '<span class="letter">' + char + '</span>';
-        if (charList.length) {
+    if (charList.length) {
+        setTimeout(() => {
+            const char = charList.shift();
+            currentWord.innerHTML += '<span class="letter">' + char + '</span>';
             displayLetters(charList, wordList, currentWord);
-        } else if (wordList.length){
-            displayMessage(wordList);
-        }
-    }, config.delayTimer);
+        }, config.delayTimer);
+    } else if (wordList.length){
+        displayMessage(wordList);
+    }
 };
 
 const start = () => {
@@ -39,7 +39,7 @@ const start = () => {
     client.connect().catch(console.error);
     client.on('message', (channel, tags, message, self) => {
         if (tags['display-name'] === config.displayName) {
-            const wordList = message.split(' ').map((word) => word.split(''));
+            const wordList = message.split(' ').map((word) => word.split('')).filter((word) => word.length);
             messageBox.innerHTML = '';
             if (config.delayTimer > 0) {
                 displayMessage(wordList);
