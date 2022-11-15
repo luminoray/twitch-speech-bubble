@@ -43,6 +43,9 @@ const start = () => {
             messageBox.innerHTML = '';
             if (config.delayTimer > 0) {
                 displayMessage(wordList);
+                if (config.speech.enable) {
+                    speech.speakText(message);
+                }
             } else {
                 messageBox.innerHTML = wordList.map((word) => '<span class="word">' + word.map((char) => '<span class="letter">' + char + '</span>').join('') + '</span>').join(' ');
             }
