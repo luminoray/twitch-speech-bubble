@@ -1,0 +1,58 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+#latest-message {
+    height: 100%;
+}
+
+#name {
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    background: rgb(220,0,0);
+    padding: 0 20px;
+    color: #FFF;
+    transform: skew(-5deg);
+    position: absolute;
+    left: calc((100vh * 0.0875) - (10px * 0.0875) + 20px);
+    z-index: 10;
+}
+
+#name .text {
+    transform: skew(5deg);
+}
+
+#message {
+    font-size: 30px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    height: calc(100% - 10px - (2 * 20px) - 20px);
+    background: #FFF;
+    transform: skew(-5deg);
+    width: calc(100% - (100vh * 0.0875) + (10px * 0.0875) - 10px - (2 * 20px)); /* Good enough approximation */
+    position: relative;
+    top: 20px;
+    left: calc((50vh * 0.0875) - (5px * 0.0875));
+    box-shadow: 10px 10px;
+    padding: 20px;
+}
+
+/* We separate each word into <span class="word"></span> */
+.word {
+    display: inline-block;
+}
+
+/* We separate each letter into <span class="letter"></span> */
+.letter {
+    display: inline-block;
+    transform: skew(5deg) !important;
+}
+
+.word:first-child .letter:first-child {
+    text-transform: uppercase;
+}
