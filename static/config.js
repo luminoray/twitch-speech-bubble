@@ -15,5 +15,11 @@ const config = {
             VoiceId: 'Ivy'
         },
         pitch: 'high'
+    },
+    translation: {
+        enable: false,
+        key: '',
+        source: 'en',
+        target: 'ja'
     }
 }
