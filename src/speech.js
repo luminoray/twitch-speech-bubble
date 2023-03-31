@@ -1,5 +1,11 @@
-const speech = {
-    init: () => {
+let polly;
+let signer;
+let player;
+let source;
+let error;
+
+export default function() {
+    let init = function() {
         // Initialize the Amazon Cognito credentials provider
         AWS.config.region = config.speech.credentials.region; // Region
         AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -7,35 +13,37 @@ const speech = {
         });
 
         // Create the Polly service object and presigner object
-        this.polly = new AWS.Polly({apiVersion: '2016-06-10'});
-        this.signer = new AWS.Polly.Presigner(config.speech.parameters, this.polly);
+        polly = new AWS.Polly({apiVersion: '2016-06-10'});
+        signer = new AWS.Polly.Presigner(config.speech.parameters, polly);
 
-        this.player = document.createElement('audio');
-        this.player.setAttribute('style', 'display:none;');
-        this.source = document.createElement('source');
-        this.source.setAttribute('src','');
-        this.player.appendChild(this.source);
-        document.body.appendChild(this.player)
-    },
+        player = document.createElement('audio');
+        player.setAttribute('style', 'display:none;');
+        source = document.createElement('source');
+        source.setAttribute('src','');
+        player.appendChild(source);
+        document.body.appendChild(player)
+    }
 
-    speakText: (text) => {
-        if (this.error) return;
+    let speakText = function(text) {
+        if (error) return;
 
-        config.speech.parameters.Text = '<speak><prosody pitch="' + config.speech.pitch + '">' + text + '</prosody></speak>';
+        const payload = config.speech.parameters;
+        payload.Text = '<speak><prosody pitch="' + config.speech.pitch + '">' + text + '</prosody></speak>';
+        payload.SampleRate = payload.SampleRate.toString();
     
         // Create presigned URL of synthesized speech file
-        this.signer.getSynthesizeSpeechUrl(config.speech.parameters, function(error, url) {
-            if (error) {
-                this.error = true;
+        signer.getSynthesizeSpeechUrl(payload, function(err, url) {
+            if (err) {
+                console.log(err);
+                error = true;
             } else {
-                this.source.src = url;
-                this.player.load();
-                this.player.play();
+                console.log('good');
+                source.src = url;
+                player.load();
+                player.play();
             }
         });
     }
-}
 
-if (config.speech.enable) {
-    document.addEventListener('DOMContentLoaded', speech.init, false);    
+    return {polly, signer, player, source, error, init, speakText}
 }
