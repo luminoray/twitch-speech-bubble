@@ -1,6 +1,9 @@
 {
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "aws-sdk": "^2.1348.0",
+    "tmi.js": "^1.8.5"
+  },
   "devDependencies": {
     "copy-webpack-plugin": "^11.0.0",
     "webpack": "^5.77.0",

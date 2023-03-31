@@ -1,3 +1,5 @@
+var AWS = require("aws-sdk");
+
 let polly;
 let signer;
 let player;

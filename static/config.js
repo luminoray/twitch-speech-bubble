@@ -3,7 +3,7 @@ const config = {
     displayName: '',
     delayTimer: 25,
     speech: {
-        enable: true,
+        enable: false,
         credentials: {
             region: 'us-east-1',
             identityPoolId: ''
@@ -15,5 +15,11 @@ const config = {
             VoiceId: 'Ivy'
         },
         pitch: 'high'
+    },
+    translation: {
+        enable: false,
+        key: '',
+        source: 'en',
+        target: 'ja'
     }
 }

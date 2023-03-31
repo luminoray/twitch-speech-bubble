@@ -4,7 +4,8 @@ module.exports = {
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: "static", to: "./" }
+        { from: "static"},
+        { from: "static/config.js", info: {minimized: true}}
       ],
     })
   ]
